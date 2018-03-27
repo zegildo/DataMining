@@ -1,0 +1,8 @@
+CREATE TABLE bbc (
+dt varchar (30),
+horas_dormidas numeric,
+rs numeric, 
+memoria_temporal numeric 
+)
+
+copy bbc from 'C:\Users\Computech\Ciencia_De_Dados\DataMining\2017.2\Elizeu\BBC_Results3.csv' with (Format csv);
