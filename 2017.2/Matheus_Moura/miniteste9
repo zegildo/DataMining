@@ -1,0 +1,43 @@
+Questão 1
+---------------------------------
+import requests
+from bs4 import BeautifulSoup
+
+URL = "https://www.globo.com/"
+
+def get_post_links(link):
+    page = requests.get(link).content
+    soup = BeautifulSoup(page)
+    return soup.findAll('a', rel='bookmark')
+
+def extract_data_from_link(post_link_tag):
+    return{
+        'link': post_link_tag.attrs['href'],
+    }
+
+posts = get_post_links(URL)
+data = []
+
+for post in posts:
+    post_data = extract_data_from_link(post)
+    data.append(post_data)
+
+data
+
+
+Questão 2
+-------------------------------
+from bs4 import BeautifulSoup
+import requests
+
+page = requests.get("https://bitcointalk.org/index.php?board=67.0")
+
+soup = BeautifulSoup(page.content, 'html.parser')
+soup1 = soup.findAll('td', class_='windowbg3')
+soup2 = soup.findAll('td', class_='windowbg')
+
+for sp1 in soup1:
+    print(sp1.text)
+    
+for sp2 in soup2:
+    print(sp2.text)
