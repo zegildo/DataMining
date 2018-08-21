@@ -25,4 +25,4 @@ def lista_titulos_links(noticias):
 noticias = get_lista_noticias()
 lista_titulos_links = lista_titulos_links(noticias)
 csv_file = pd.DataFrame(lista_titulos_links)
-csv_file.to_csv('globo_csv', sep='\t, encoding='utf-8')
+csv_file.to_csv('globo_csv', sep='\t', encoding='utf-8')
