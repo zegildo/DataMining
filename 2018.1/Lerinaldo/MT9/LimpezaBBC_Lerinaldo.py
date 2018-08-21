@@ -52,4 +52,4 @@ def meucsv(path):
 path = 'BBC-Results.csv'
 a = meucsv(path)
 csv_file = pd.DataFrame(a)
-csv_file.to_csv('teste2.csv', sep='\t', encoding='utf-8')
+csv_file.to_csv('BBC-Results-Lerinaldo.csv', sep='\t', encoding='utf-8')
