@@ -1,0 +1,5 @@
+Tudo foi feito usando o 'find and replace' do excel.
+
+deletadas linhas com timestamp inválido
+substituídos valores vazios, fora do range e inválidos por suas respectivas modas.
+
