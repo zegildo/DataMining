@@ -3,7 +3,7 @@ from lxml import html
 import pandas as pd
 
 def padroniza_titulo(titulo):
-    return titulo.encode('latin-1').decode('string_escape')
+    return titulo.encode('latin-1').decode('utf-8')
 
 def get_lista_noticias():
     URL = 'http://www.globo.com/'
@@ -18,11 +18,11 @@ def lista_titulos_links(noticias):
         if 'title' in noticia.attrib:
             titulo = padroniza_titulo(noticia.attrib['title'])
             link = noticia.attrib['href']
-            data = {"titulo": titulo, "link": link}
-            lista_titulos_links.append(data)
+            lista_titulos_links.append((titulo, link))
     return lista_titulos_links
 
 noticias = get_lista_noticias()
 lista_titulos_links = lista_titulos_links(noticias)
-csv_file = pd.DataFrame(lista_titulos_links)
-csv_file.to_csv('globo_noticias_titulos_links.csv', sep=',', encoding='utf-8')
+csv_file = pd.DataFrame(lista_titulos_links, columns = ['Titulo', 'Link'])
+print(csv_file)
+csv_file.to_csv('saidasMT-8.csv')

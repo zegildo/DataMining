@@ -1,28 +1,53 @@
 import requests
+
 from lxml import html
+
 import pandas as pd
 
+
+
 def padroniza_titulo(titulo):
-    return titulo.encode('latin-1').decode('string_escape')
+
+    return titulo.encode('latin-1').decode('utf-8')
+
+
 
 def get_lista_noticias():
+
     URL = 'http://www.globo.com/'
-    response = requests.get(URL)  
+
+    response = requests.get(URL)
+
     body = html.fromstring(response.text)
+
     noticias = body.xpath('//a[contains(@class,"hui-highlight__link")]')
+
     return noticias
 
+
+
 def lista_titulos_links(noticias):
+
     lista_titulos_links = []
+
     for noticia in noticias:
+
         if 'title' in noticia.attrib:
+
             titulo = padroniza_titulo(noticia.attrib['title'])
+
             link = noticia.attrib['href']
-            data = {"titulo": titulo, "link": link}
-            lista_titulos_links.append(data)
+
+            lista_titulos_links.append((titulo, link))
+
     return lista_titulos_links
 
+
+
 noticias = get_lista_noticias()
+
 lista_titulos_links = lista_titulos_links(noticias)
-csv_file = pd.DataFrame(lista_titulos_links)
-csv_file.to_csv('globo_noticias_titulos_links.csv', sep=',', encoding='utf-8')
+
+csv_file = pd.DataFrame(lista_titulos_links, columns=['Título','Link'])
+
+csv_file.to_csv('Lista_Noticias_Globo.csv', sep=',', encoding='utf-16')
