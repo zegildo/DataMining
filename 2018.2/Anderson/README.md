@@ -1,6 +1,6 @@
 # Trabalhos de analise e extração de dados desenvolvidos por Anderson Cirilo Valentim 
 
-[![Gitub]()](https://github.com/Vectro26/DataMining)
+[![Github]()](https://github.com/Vectro26/DataMining)
 [![Instagram]()](https://www.instagram.com/andersec_valentim/)
 [![Medium]()](https://medium.com/@andersonvalentim)
 [![Facebook]()](https://www.facebook.com/anderson.valentim26)
