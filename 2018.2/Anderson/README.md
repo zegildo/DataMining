@@ -15,6 +15,8 @@ Esse repositório contem as atividades desenvolvidas durante a disciplina de min
 
   * [MT10]- Coleta e extração de dados 
   * [P1]- Investigação de Dados com Dataset do SUS 
+  * [MT5]- Visualização de dados de amigos do facebook através de boxplot 
+  
 
 
 Atualizações:
@@ -30,3 +32,4 @@ MIT
 
    [MT10]: <https://github.com/Vectro26/DataMining/tree/master/2018.2/Anderson/MT10>
    [P1]: <https://github.com/Vectro26/DataMining/tree/master/2018.2/Anderson/P1/Investiga%C3%A7%C3%A3o%20de%20Dad>
+   [MT5]: <https://github.com/Vectro26/DataMining/blob/master/2018.2/Anderson/MT5/MT5.md>
