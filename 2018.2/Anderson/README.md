@@ -17,6 +17,10 @@ Esse repositório contem as atividades desenvolvidas durante a disciplina de min
   * [P1]- Investigação de Dados com Dataset do SUS 
   * [MT5]- Visualização de dados de amigos do facebook através de boxplot
   * [MT6]- Contagem de problemas relacionados a qualidade de dados 
+  
+  
+
+
 
 Atualizações:
   - O repositório será atualizado de acordo com o desenvolvimento da disciplina
@@ -32,4 +36,7 @@ MIT
    [MT10]: <https://github.com/Vectro26/DataMining/tree/master/2018.2/Anderson/MT10>
    [P1]: <https://github.com/Vectro26/DataMining/tree/master/2018.2/Anderson/P1/Investiga%C3%A7%C3%A3o%20de%20Dad>
    [MT5]: <https://github.com/Vectro26/DataMining/blob/master/2018.2/Anderson/MT5/MT5.md>
+
    [MT6]:<https://github.com/Vectro26/DataMining/blob/master/2018.2/Anderson/MT6/Readme.md>
+
+
