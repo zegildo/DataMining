@@ -4,7 +4,7 @@ This repository contains the activities developed by [Gabriel Guilherme](https:/
 
 ## Index
 
-* P1 - [Data Research with SUS Dataset](/P1)
+* P1 - [Data Research with SUS Dataset](https://github.com/gabrielgui19/DataMining/tree/master/2018.2/Gabriel/P1)
 * ...
 
 
