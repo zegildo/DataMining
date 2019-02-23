@@ -1,6 +1,6 @@
 # Gabriel Guilherme - Data Mining Activities
 
-This repository contains the activities developed by Gabriel Guilherme (@gabrielgui19) in Data Mining discipline at the Federal University of the Semi-Arid Region (UFERSA).
+This repository contains the activities developed by [Gabriel Guilherme](https://github.com/gabrielgui19) in Data Mining discipline at the Federal University of the Semi-Arid Region (UFERSA).
 
 ## Index
 
