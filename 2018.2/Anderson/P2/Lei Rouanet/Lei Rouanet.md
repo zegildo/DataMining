@@ -72,7 +72,7 @@ proposta.dtypes
 
 
 
-# Tipos de variaveis do dataframe Proposta 
+# Tipos de variaveis do dataframe proposta 
 
 # Qualitativas nominais
 
@@ -86,7 +86,7 @@ data_arquivamento,data_aceite,data_termino
 
 id
 
-# Índice de Tendência central do dataframe Proposta 
+# Índice de Tendência central do dataframe proposta 
 
 
 ```python
@@ -196,7 +196,7 @@ nome,cgccpf,UF,responsavel,municipio,tipo_pessoa
 
 total_doado
 
-# Índice de Tendência central do dataframe Incentivadores
+# Índice de Tendência central do dataframe incentivadores
 
 
 ```python
@@ -312,7 +312,7 @@ projetos.dtypes
 
 
 
-# Tipos de variaveis do dataframe Projetos
+# Tipos de variaveis do dataframe projetos
 
 # Qualitativas nominais
 
@@ -326,7 +326,7 @@ data_inicio
 
 outras_fontes,valor_aprovado,valor_solicitado,valor_projeto,valor_captado,valor_proposta
 
-# Índice de Tendência central do dataframe Projetos
+# Índice de Tendência central do dataframe projetos
 
 
 ```python
@@ -459,7 +459,7 @@ projetos.describe()
 
 
 
-# *Variaveis do dataframe  Proponentes 
+# *Variaveis do dataframe  proponentes 
 
 
 ```python
@@ -480,7 +480,7 @@ proponentes.dtypes
 
 
 
-# Tipos de variaveis do dataframe Proponentes
+# Tipos de variaveis do dataframe proponentes
 
 # Qualitativas nominais
 
@@ -496,7 +496,7 @@ nome,cgccpf,tipo_pessoa,responsavel,UF,municipio
 total_captado
 ```
 
-# Índice de Tendência central do dataframe Proponentes
+# Índice de Tendência central do dataframe proponentes
 
 
 ```python
@@ -661,7 +661,7 @@ dadosNulos=proposta.isnull().sum().sum()+incentivadores.isnull().sum().sum()+pro
     ('Valores vazios no dataframe fornecedores:', 94)
 
 
-# Quantidade de CGC/CPF inconsistente nos dataframe  Projetos,Fornecedores, Proponentes e Incentivadores
+# Quantidade de CGC/CPF inconsistente nos dataframe  projetos,fornecedores, proponentes e incentivadores
 
 
 ```python
@@ -682,7 +682,7 @@ cgccppfInconsistentes=quantidadeProjetos.sum()+quantidadeProjetos.sum()+quantida
     ('Quantidade de CPF inconsistente no dataframe Incentivadores', 0)
 
 
-# Quantidade de  dados referentes a UF(Unidades da Federação) incosistentes no dataframe 
+# Quantidade de  dados referentes a UF(Unidades da Federação) inconsistentes no dataframe 
 
 
 ```python
