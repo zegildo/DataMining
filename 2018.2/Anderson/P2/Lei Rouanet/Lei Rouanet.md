@@ -605,7 +605,7 @@ areas.dtypes
 
 
 
-##Qualitativas nominais
+# Qualitativas nominais
 
 
 ```python
