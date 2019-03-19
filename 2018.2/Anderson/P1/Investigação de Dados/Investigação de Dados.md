@@ -204,15 +204,25 @@ Conclusão: Com um total de 14.594(mulheres) e 7725(homens) podemos afirmar que 
 # **2.** Qual a proporção de pacientes que não comparecem às consultas? 
 
 
-Levando em consideração a questão anterior, temos que 14.594 mulheres faltaram as consultas 
-e  7725 homens  que  também faltaram, o que corresponde 22319 faltas as consultas,  o todo 
-de quantidade de consultas é corresponde á 110527, dividindo o numero de consultas agendadas pelo numero de consultas faltadas, temos a proporção de 110527/22319, aplicando um simples regra de 3, onde 110527 corresponde ao todo (100%), e 22319  um numero que não conhecemos, temos que 22319 corresponde a cerca 20% das consultas,ou seja, proporcional a 0.20 das consultas marcadas foram faltadas. 
+
+```python
+df.groupby('No-show')['AppointmentID'].nunique().plot(kind='bar')
+
+
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x7effe07d4610>
+
+
+
+
+![png](output_9_1.png)
 
 
 # 3.Qual a distribuição da idade de pacientes que não comparecem às consultas?
-
-Vamos criar um novo dataframe para trabalhar somente com os dados relativos a pacientes 
-que não compareceram as consultas 
 
 
 ```python
@@ -221,138 +231,18 @@ distribuicao = df[df['No-show'] == 'Yes']
 
 ```
 
-Feito isso, podemos cruzar os dados de faltas com as idades, dessa forma teremos uma mostragem de dados que poderá auxiliar na elaboração do gráfico: 
-
-
-
 
 ```python
-pd.crosstab(distribuicao['No-show'],distribuicao['Age'])
-
+distribuicao[['No-show','Age']].hist(bins=120,alpha=0.5,color='#FF005E')
+plt.savefig('nomeDaFigura.png')    
 
 ```
 
 
+![png](output_12_0.png)
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>Age</th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>...</th>
-      <th>90</th>
-      <th>91</th>
-      <th>92</th>
-      <th>93</th>
-      <th>94</th>
-      <th>95</th>
-      <th>96</th>
-      <th>97</th>
-      <th>98</th>
-      <th>115</th>
-    </tr>
-    <tr>
-      <th>No-show</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Yes</th>
-      <td>639</td>
-      <td>415</td>
-      <td>252</td>
-      <td>277</td>
-      <td>282</td>
-      <td>320</td>
-      <td>316</td>
-      <td>301</td>
-      <td>318</td>
-      <td>364</td>
-      <td>...</td>
-      <td>23</td>
-      <td>13</td>
-      <td>20</td>
-      <td>10</td>
-      <td>6</td>
-      <td>6</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1</td>
-      <td>3</td>
-    </tr>
-  </tbody>
-</table>
-<p>1 rows × 100 columns</p>
-</div>
-
-
-
-Elaboramos o grafico referente para melhor vizualização dos dados
-
-
-```python
-distribuicao[['No-show','Age']].hist(bins=120,alpha=0.5,color='Green')
-
-```
-
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x7f9decf12898>]],
-          dtype=object)
-
-
-
-
-![png](output_16_1.png)
-
-
-Conclusão: Podemos perceber, que o maior numero de faltas concentram-se na idade entre 0 e 1 ano de idade 
+Conclusão: Podemos perceber, que o maior numero de faltas concentram-se em bebês, em seus primeiros meses de vida.
 
 # **4)** Há alguma relação entre doença e não comparecimento às consultas?
 
@@ -360,137 +250,87 @@ Podemos agrupar os dados levando em consideração as doenças e as faltas, o 1 
 
 
 ```python
-naocomparecimento= distribuicao[ (distribuicao['Hipertension'] == 1) | (distribuicao['Diabetes'] == 1) | (distribuicao['Alcoholism'] == 1) | (distribuicao['Handcap'] == 1) ]
+hipertensos = df.loc[df['Hipertension'] == 1, ['No-show', 'Hipertension']]
+hipertensosCont = hipertensos.loc[hipertensos['No-show'] == 'Yes', ['Hipertension']].count()
 
+diabetes = df.loc[df['Diabetes'] == 1, ['No-show', 'Diabetes']]
+diabetesCont = diabetes.loc[diabetes['No-show'] == 'Yes', ['Diabetes']].count()
+alcoolismo = df.loc[df['Alcoholism'] == 1, ['No-show', 'Alcoholism']]
+alcoolismoCont= alcoolismo.loc[alcoolismo['No-show'] == 'Yes', ['Alcoholism']].count()
 
-
-
-    
-    
 ```
 
 Em seguida, contamos a quantidade de vezes que as doenças são detectada nas consultas não realizadas 
 
 
 ```python
-hipertensao= naocomparecimento['Hipertension'].count() 
-diabetes= naocomparecimento['Diabetes'].count()
-alcolismo=  naocomparecimento['Alcoholism'].count()
-problemacoracao= naocomparecimento['Handcap'].count() 
-      
 
-   
-
-```
-
-Depois, elaboramos um gráfico parar a melhor visualização dos dados referente ás doenças 
-
-
-
-```python
-labels = ['Hipertensão', 'Diabetes', 'Alcolismo', 'Problemas no coração']
-titulos = [hipertensao, diabetes,alcolismo,problemacoracao]
-cores = ['lightblue', 'green', 'white', 'red']
-explode = (0.1, 0, 0, 0)  
-total = (hipertensao+diabetes+alcolismo+problemacoracao) 
-
-plt.pie(titulos, explode=explode, labels=labels, colors=cores, autopct=lambda p: '{:.0f}'.format(p * total / 100), shadow=True, startangle=90)
-
-plt.axis('equal') 
+labels = ['Hipertensos', 'Diabetes', 'Alcoolismo']
+sizes = [hipertensosCont,diabetesCont , alcoolismoCont]
+fig1,ax1= plt.subplots()
+ax1.pie(sizes,labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+ax1.axis('equal') 
 plt.show()
+plt.savefig('pizza.png')    
+
+    
+    
 ```
 
 
-![png](output_24_0.png)
+![png](output_18_0.png)
 
 
-Conclusão:Podemos perceber, que o numero de faltas por tipo de doença é homogenia, isso pode levar a crer, que os pacientes avaliados podem conter  2 doenças relacionadas entre sí, o que pode acarretar no não comparecimento ás consultas.
+
+    <matplotlib.figure.Figure at 0x7effdf9e3ad0>
+
+
+Conclusão:Podemos perceber, que os hipertensos são os que tem maiores probabalidade de faltar  
 
 # **5)** Qual a cidade com maior número de não comparecimentos?<br>
 
 
 
 ```python
-distribuicao['Neighbourhood'].unique()
+cidade= distribuicao.groupby('Neighbourhood').size()
+cidade.loc[ cidade['Neighbourhood'].idxmax()]
+df_grouped = df.groupby('Neighbourhood').size().reset_index(name='Missing appointments')
 
-#distribuicao['Neighbourhood'].values_counts(normalize=True)
-pd.value_counts(distribuicao['Neighbourhood'].values.flatten())
+#pd.value_counts(distribuicao['Neighbourhood'].values.flatten())
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    <ipython-input-54-e2e8386fa29e> in <module>()
+          1 cidade= distribuicao.groupby('Neighbourhood').size()
+    ----> 2 cidade.loc[ cidade['Neighbourhood'].idxmax()]
+          3 
+          4 #pd.value_counts(distribuicao['Neighbourhood'].values.flatten())
 
 
-    JARDIM CAMBURI                 1465
-    MARIA ORTIZ                    1219
-    ITARARÉ                         923
-    RESISTÊNCIA                     906
-    CENTRO                          703
-    JESUS DE NAZARETH               696
-    JARDIM DA PENHA                 631
-    CARATOÍRA                       591
-    TABUAZEIRO                      573
-    BONFIM                          550
-    ILHA DO PRÍNCIPE                532
-    ANDORINHAS                      521
-    SÃO PEDRO                       515
-    SANTO ANDRÉ                     508
-    SANTA MARTHA                    496
-    SANTO ANTÔNIO                   484
-    ROMÃO                           474
-    GURIGICA                        456
-    JABOUR                          451
-    DA PENHA                        429
-    SÃO JOSÉ                        428
-    MARUÍPE                         424
-    NOVA PALESTINA                  402
-    BELA VISTA                      384
-    SANTOS DUMONT                   369
-    SÃO CRISTÓVÃO                   363
-    ILHA DE SANTA MARIA             361
-    FORTE SÃO JOÃO                  346
-    CRUZAMENTO                      304
-    PRAIA DO SUÁ                    294
-                                   ... 
-    SANTA CECÍLIA                   123
-    SANTOS REIS                     112
-    MATA DA PRAIA                   110
-    ESTRELINHA                      106
-    DO MOSCOSO                       92
-    BARRO VERMELHO                   91
-    PIEDADE                          88
-    DO CABRAL                        88
-    SANTA LÚCIA                      86
-    SANTA LUÍZA                      77
-    SOLON BORGES                     69
-    ARIOVALDO FAVALESSA              62
-    BOA VISTA                        58
-    COMDUSA                          56
-    MÁRIO CYPRESTE                   54
-    ENSEADA DO SUÁ                   52
-    ANTÔNIO HONÓRIO                  50
-    FRADINHOS                        48
-    DE LOURDES                       47
-    HORTO                            42
-    SANTA HELENA                     37
-    UNIVERSITÁRIO                    32
-    NAZARETH                         29
-    SEGURANÇA DO LAR                 28
-    MORADA DE CAMBURI                16
-    PONTAL DE CAMBURI                12
-    ILHA DO BOI                       3
-    ILHA DO FRADE                     2
-    ILHAS OCEÂNICAS DE TRINDADE       2
-    AEROPORTO                         1
-    Length: 80, dtype: int64
+    /usr/local/lib/python2.7/dist-packages/pandas/core/series.pyc in __getitem__(self, key)
+        866         key = com.apply_if_callable(key, self)
+        867         try:
+    --> 868             result = self.index.get_value(self, key)
+        869 
+        870             if not is_scalar(result):
 
+
+    /usr/local/lib/python2.7/dist-packages/pandas/core/indexes/base.pyc in get_value(self, series, key)
+       4386                     raise InvalidIndexError(key)
+       4387                 else:
+    -> 4388                     raise e1
+       4389             except Exception:  # pragma: no cover
+       4390                 raise e1
+
+
+    KeyError: 'Neighbourhood'
 
 
 Como podemos ver, o hospital com maior numero de não comparecimentos é o das proximidades do  JARDIM CAMBURI com 1465 não comparecimentos, o JARDIM CAMBURI, está localizado na cidade de Vitória-ES
-
-
-```python
-
-```
 
 # **6)** Qual é o mês, dia da semana e dia do mês com maior número de não comparecimentos?
 
@@ -510,7 +350,7 @@ distribuicao['AppointmentDay']=pd.to_datetime(distribuicao.AppointmentDay)
 
 ```
 
-    /usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:3: SettingWithCopyWarning: 
+    /home/vectro26/.local/lib/python2.7/site-packages/ipykernel_launcher.py:3: SettingWithCopyWarning: 
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
@@ -518,10 +358,7 @@ distribuicao['AppointmentDay']=pd.to_datetime(distribuicao.AppointmentDay)
       This is separate from the ipykernel package so we can avoid doing imports until
 
 
-
-```python
 Agora, agrupamos o numero de consultas por mês
-```
 
 
 ```python
@@ -540,12 +377,9 @@ df.groupby(distribuicao['AppointmentDay'].dt.month).size()
 
 
 
-
-```python
 Como podemos perceber, o mês 5(MAIO) é o que dispoẽ de maior quantidade de tuplas agrupadas, 
 ou seja, ele é o mês com maior numero de faltas. Em seguida, agrupamos os dias do mês 5 
 para podemos obter os dados de faltas por dia da semana
-```
 
 
 ```python
@@ -568,11 +402,8 @@ pd.value_counts(dias.AppointmentDay.dt.dayofweek.values.flatten())
 
 
 
-
-```python
 Como podemos observar, o dia da semana  que ocorre maior numero de faltas, é a terça-feira
 com 4336 faltas
-```
 
 
 ```python
