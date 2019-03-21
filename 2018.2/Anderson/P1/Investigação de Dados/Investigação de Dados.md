@@ -39,141 +39,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import datetime
-#dtype={'AppointmentDay': str}
 df = pd.read_csv('noshowappointments-kagglev2-may-2016.csv');
 
-df.head()
-#df.dtypes
+
 ```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PatientId</th>
-      <th>AppointmentID</th>
-      <th>Gender</th>
-      <th>ScheduledDay</th>
-      <th>AppointmentDay</th>
-      <th>Age</th>
-      <th>Neighbourhood</th>
-      <th>Scholarship</th>
-      <th>Hipertension</th>
-      <th>Diabetes</th>
-      <th>Alcoholism</th>
-      <th>Handcap</th>
-      <th>SMS_received</th>
-      <th>No-show</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2.987250e+13</td>
-      <td>5642903</td>
-      <td>F</td>
-      <td>2016-04-29T18:38:08Z</td>
-      <td>2016-04-29T00:00:00Z</td>
-      <td>62</td>
-      <td>JARDIM DA PENHA</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5.589978e+14</td>
-      <td>5642503</td>
-      <td>M</td>
-      <td>2016-04-29T16:08:27Z</td>
-      <td>2016-04-29T00:00:00Z</td>
-      <td>56</td>
-      <td>JARDIM DA PENHA</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>4.262962e+12</td>
-      <td>5642549</td>
-      <td>F</td>
-      <td>2016-04-29T16:19:04Z</td>
-      <td>2016-04-29T00:00:00Z</td>
-      <td>62</td>
-      <td>MATA DA PRAIA</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>8.679512e+11</td>
-      <td>5642828</td>
-      <td>F</td>
-      <td>2016-04-29T17:29:31Z</td>
-      <td>2016-04-29T00:00:00Z</td>
-      <td>8</td>
-      <td>PONTAL DE CAMBURI</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>8.841186e+12</td>
-      <td>5642494</td>
-      <td>F</td>
-      <td>2016-04-29T16:07:23Z</td>
-      <td>2016-04-29T00:00:00Z</td>
-      <td>56</td>
-      <td>JARDIM DA PENHA</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>No</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 
 # **1)** Quem mais falta as consultas homens ou mulheres?
 
@@ -204,15 +73,25 @@ Conclusão: Com um total de 14.594(mulheres) e 7725(homens) podemos afirmar que 
 # **2.** Qual a proporção de pacientes que não comparecem às consultas? 
 
 
-Levando em consideração a questão anterior, temos que 14.594 mulheres faltaram as consultas 
-e  7725 homens  que  também faltaram, o que corresponde 22319 faltas as consultas,  o todo 
-de quantidade de consultas é corresponde á 110527, dividindo o numero de consultas agendadas pelo numero de consultas faltadas, temos a proporção de 110527/22319, aplicando um simples regra de 3, onde 110527 corresponde ao todo (100%), e 22319  um numero que não conhecemos, temos que 22319 corresponde a cerca 20% das consultas,ou seja, proporcional a 0.20 das consultas marcadas foram faltadas. 
+
+```python
+df.groupby('No-show')['AppointmentID'].nunique().plot(kind='bar')
+
+
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x7effe07d4610>
+
+
+
+
+![png](output_9_1.png)
 
 
 # 3.Qual a distribuição da idade de pacientes que não comparecem às consultas?
-
-Vamos criar um novo dataframe para trabalhar somente com os dados relativos a pacientes 
-que não compareceram as consultas 
 
 
 ```python
@@ -221,287 +100,84 @@ distribuicao = df[df['No-show'] == 'Yes']
 
 ```
 
-Feito isso, podemos cruzar os dados de faltas com as idades, dessa forma teremos uma mostragem de dados que poderá auxiliar na elaboração do gráfico: 
-
-
-
 
 ```python
-pd.crosstab(distribuicao['No-show'],distribuicao['Age'])
-
+distribuicao[['No-show','Age']].hist(bins=120,alpha=0.5,color='#FF005E')
+plt.savefig('nomeDaFigura.png')    
 
 ```
 
 
+![png](output_12_0.png)
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>Age</th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>...</th>
-      <th>90</th>
-      <th>91</th>
-      <th>92</th>
-      <th>93</th>
-      <th>94</th>
-      <th>95</th>
-      <th>96</th>
-      <th>97</th>
-      <th>98</th>
-      <th>115</th>
-    </tr>
-    <tr>
-      <th>No-show</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Yes</th>
-      <td>639</td>
-      <td>415</td>
-      <td>252</td>
-      <td>277</td>
-      <td>282</td>
-      <td>320</td>
-      <td>316</td>
-      <td>301</td>
-      <td>318</td>
-      <td>364</td>
-      <td>...</td>
-      <td>23</td>
-      <td>13</td>
-      <td>20</td>
-      <td>10</td>
-      <td>6</td>
-      <td>6</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1</td>
-      <td>3</td>
-    </tr>
-  </tbody>
-</table>
-<p>1 rows × 100 columns</p>
-</div>
-
-
-
-Elaboramos o grafico referente para melhor vizualização dos dados
-
-
-```python
-distribuicao[['No-show','Age']].hist(bins=120,alpha=0.5,color='Green')
-
-```
-
-
-
-
-    array([[<matplotlib.axes._subplots.AxesSubplot object at 0x7f9decf12898>]],
-          dtype=object)
-
-
-
-
-![png](output_16_1.png)
-
-
-Conclusão: Podemos perceber, que o maior numero de faltas concentram-se na idade entre 0 e 1 ano de idade 
+Conclusão: Podemos perceber, que o maior numero de faltas concentram-se em bebês, em seus primeiros meses de vida.
 
 # **4)** Há alguma relação entre doença e não comparecimento às consultas?
 
-Podemos agrupar os dados levando em consideração as doenças e as faltas, o 1 representa que existe determinada doença, e o 0 é que não, primeiro agruparemos as pessoas que tenham pelos menos uma das doenças definidas na base de dados:
-
 
 ```python
-naocomparecimento= distribuicao[ (distribuicao['Hipertension'] == 1) | (distribuicao['Diabetes'] == 1) | (distribuicao['Alcoholism'] == 1) | (distribuicao['Handcap'] == 1) ]
+hipertensos = df.loc[df['Hipertension'] == 1, ['No-show', 'Hipertension']]
+hipertensosCont = hipertensos.loc[hipertensos['No-show'] == 'Yes', ['Hipertension']].count()
 
+diabetes = df.loc[df['Diabetes'] == 1, ['No-show', 'Diabetes']]
+diabetesCont = diabetes.loc[diabetes['No-show'] == 'Yes', ['Diabetes']].count()
+alcoolismo = df.loc[df['Alcoholism'] == 1, ['No-show', 'Alcoholism']]
+alcoolismoCont= alcoolismo.loc[alcoolismo['No-show'] == 'Yes', ['Alcoholism']].count()
 
-
-
-    
-    
 ```
 
-Em seguida, contamos a quantidade de vezes que as doenças são detectada nas consultas não realizadas 
-
 
 ```python
-hipertensao= naocomparecimento['Hipertension'].count() 
-diabetes= naocomparecimento['Diabetes'].count()
-alcolismo=  naocomparecimento['Alcoholism'].count()
-problemacoracao= naocomparecimento['Handcap'].count() 
-      
+labels = ['Hipertensos', 'Diabetes', 'Alcoolismo']
+sizes = [hipertensosCont,diabetesCont , alcoolismoCont]
+fig1,ax1= plt.subplots()
+ax1.pie(sizes,labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
+ax1.axis('equal') 
+plt.show()
+plt.savefig('pizza.png')    
+
 
    
 
 ```
 
-Depois, elaboramos um gráfico parar a melhor visualização dos dados referente ás doenças 
+
+![png](output_16_0.png)
 
 
 
-```python
-labels = ['Hipertensão', 'Diabetes', 'Alcolismo', 'Problemas no coração']
-titulos = [hipertensao, diabetes,alcolismo,problemacoracao]
-cores = ['lightblue', 'green', 'white', 'red']
-explode = (0.1, 0, 0, 0)  
-total = (hipertensao+diabetes+alcolismo+problemacoracao) 
-
-plt.pie(titulos, explode=explode, labels=labels, colors=cores, autopct=lambda p: '{:.0f}'.format(p * total / 100), shadow=True, startangle=90)
-
-plt.axis('equal') 
-plt.show()
-```
+    <matplotlib.figure.Figure at 0x7effdfb66050>
 
 
-![png](output_24_0.png)
-
-
-Conclusão:Podemos perceber, que o numero de faltas por tipo de doença é homogenia, isso pode levar a crer, que os pacientes avaliados podem conter  2 doenças relacionadas entre sí, o que pode acarretar no não comparecimento ás consultas.
+Conclusão:Podemos perceber, que aparentemente os hipertensos são mais propensos a faltar ás consultas
 
 # **5)** Qual a cidade com maior número de não comparecimentos?<br>
 
 
 
 ```python
-distribuicao['Neighbourhood'].unique()
+cidade= distribuicao.groupby('Neighbourhood').size()
+cidade = df.groupby('Neighbourhood').size().reset_index(name='Cidade')
+cidade.loc[cidade['Cidade'].idxmax()]
 
-#distribuicao['Neighbourhood'].values_counts(normalize=True)
-pd.value_counts(distribuicao['Neighbourhood'].values.flatten())
 ```
 
 
 
 
-    JARDIM CAMBURI                 1465
-    MARIA ORTIZ                    1219
-    ITARARÉ                         923
-    RESISTÊNCIA                     906
-    CENTRO                          703
-    JESUS DE NAZARETH               696
-    JARDIM DA PENHA                 631
-    CARATOÍRA                       591
-    TABUAZEIRO                      573
-    BONFIM                          550
-    ILHA DO PRÍNCIPE                532
-    ANDORINHAS                      521
-    SÃO PEDRO                       515
-    SANTO ANDRÉ                     508
-    SANTA MARTHA                    496
-    SANTO ANTÔNIO                   484
-    ROMÃO                           474
-    GURIGICA                        456
-    JABOUR                          451
-    DA PENHA                        429
-    SÃO JOSÉ                        428
-    MARUÍPE                         424
-    NOVA PALESTINA                  402
-    BELA VISTA                      384
-    SANTOS DUMONT                   369
-    SÃO CRISTÓVÃO                   363
-    ILHA DE SANTA MARIA             361
-    FORTE SÃO JOÃO                  346
-    CRUZAMENTO                      304
-    PRAIA DO SUÁ                    294
-                                   ... 
-    SANTA CECÍLIA                   123
-    SANTOS REIS                     112
-    MATA DA PRAIA                   110
-    ESTRELINHA                      106
-    DO MOSCOSO                       92
-    BARRO VERMELHO                   91
-    PIEDADE                          88
-    DO CABRAL                        88
-    SANTA LÚCIA                      86
-    SANTA LUÍZA                      77
-    SOLON BORGES                     69
-    ARIOVALDO FAVALESSA              62
-    BOA VISTA                        58
-    COMDUSA                          56
-    MÁRIO CYPRESTE                   54
-    ENSEADA DO SUÁ                   52
-    ANTÔNIO HONÓRIO                  50
-    FRADINHOS                        48
-    DE LOURDES                       47
-    HORTO                            42
-    SANTA HELENA                     37
-    UNIVERSITÁRIO                    32
-    NAZARETH                         29
-    SEGURANÇA DO LAR                 28
-    MORADA DE CAMBURI                16
-    PONTAL DE CAMBURI                12
-    ILHA DO BOI                       3
-    ILHA DO FRADE                     2
-    ILHAS OCEÂNICAS DE TRINDADE       2
-    AEROPORTO                         1
-    Length: 80, dtype: int64
+    Neighbourhood    JARDIM CAMBURI
+    Cidade                     7717
+    Name: 38, dtype: object
 
 
 
 Como podemos ver, o hospital com maior numero de não comparecimentos é o das proximidades do  JARDIM CAMBURI com 1465 não comparecimentos, o JARDIM CAMBURI, está localizado na cidade de Vitória-ES
 
-
-```python
-
-```
-
 # **6)** Qual é o mês, dia da semana e dia do mês com maior número de não comparecimentos?
 
 
 ```python
-Primeiro, iremos transformar a coluna AppointmentDay para o tipo datetime  
-```
-
-
-```python
-
 
 distribuicao['AppointmentDay']=pd.to_datetime(distribuicao.AppointmentDay)
 
@@ -510,18 +186,15 @@ distribuicao['AppointmentDay']=pd.to_datetime(distribuicao.AppointmentDay)
 
 ```
 
-    /usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:3: SettingWithCopyWarning: 
+    /home/vectro26/.local/lib/python2.7/site-packages/ipykernel_launcher.py:2: SettingWithCopyWarning: 
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
     See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-      This is separate from the ipykernel package so we can avoid doing imports until
+      
 
 
-
-```python
 Agora, agrupamos o numero de consultas por mês
-```
 
 
 ```python
@@ -540,17 +213,13 @@ df.groupby(distribuicao['AppointmentDay'].dt.month).size()
 
 
 
-
-```python
 Como podemos perceber, o mês 5(MAIO) é o que dispoẽ de maior quantidade de tuplas agrupadas, 
 ou seja, ele é o mês com maior numero de faltas. Em seguida, agrupamos os dias do mês 5 
 para podemos obter os dados de faltas por dia da semana
-```
 
 
 ```python
-dias = distribuicao[distribuicao.AppointmentDay.dt.month==5]
-pd.value_counts(dias.AppointmentDay.dt.dayofweek.values.flatten())
+df.groupby(distribuicao['AppointmentDay'].dt.dayofweek).size()
 
 
 ```
@@ -558,21 +227,19 @@ pd.value_counts(dias.AppointmentDay.dt.dayofweek.values.flatten())
 
 
 
-    1    4336
-    0    3817
-    2    3507
-    4    2599
-    3    2536
-    5       9
+    AppointmentDay
+    0.0    4690
+    1.0    5152
+    2.0    5093
+    3.0    3338
+    4.0    4037
+    5.0       9
     dtype: int64
 
 
 
-
-```python
 Como podemos observar, o dia da semana  que ocorre maior numero de faltas, é a terça-feira
-com 4336 faltas
-```
+com 5123 faltas
 
 
 ```python
@@ -632,8 +299,24 @@ df.groupby(["Scholarship", "No-show"]).size()
 
 
 ```python
-Conclusão: Os participantes do Bolsa Famíla correspondem a 10861, os mesmo em sua grande 
-maioria, no total de 8283 não faltam as consultas, o que correspondem a 76% das consultas
-realizadas com os participantes do programa.
+df.groupby(["Scholarship", "No-show"]).size().plot(kind='bar')
 
 ```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x7effddd8e1d0>
+
+
+
+
+![png](output_32_1.png)
+
+
+Conclusão: Os participantes do Bolsa Famíla correspondem a 10861, os mesmos em sua grande  maioria, no total de 8283 não faltam as consultas, o que correspondem a 76% das consultas realizadas com os participantes do programa. Ao analisar os dados, podemos perceber que é menos proprício participantes do bolsa família faltar aos atendimentos médicos.
+
+
+# Conclusão geral 
+
+Com base  no estudo realizado, podemos perceber que existe um Outlier na distribuição de idades dos pacientes, especificamente  nos primeiros de vida de um bebê, uma das hipóteses que pode ser levantadas é que existe essa ausência nas consultas, devido  o programa Estratégia Saúde Familiar(ESF), esse programa acompanha crianças e idosos, com isso não é necessário a ida até a unidade de saúde para realizar a consulta médica.
